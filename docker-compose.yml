@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  hush-app:
+    image: hush-app:latest
+    container_name: hush-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8100:8100"
+    restart: unless-stopped
+    healthcheck:
+      # The Nginx proxy is the entry point, so we check if it's serving content.
+      # This command curls the root path inside the container.
+      test: ["CMD", "curl", "-f", "http://localhost:8100"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

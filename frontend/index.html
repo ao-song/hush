@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hush - Share Secrets Securely</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hush - Share Secrets Securely</h1>
+        <div id="create-secret-section">
+            <textarea id="secret-input" placeholder="Enter your secret here..."></textarea>
+            <button id="generate-link-btn">Generate Shareable Link</button>
+            <div id="link-output" class="hidden">
+                <p>Share this link:</p>
+                <input type="text" id="share-link" readonly>
+                <button id="copy-link-btn">Copy Link</button>
+            </div>
+            <p id="message" class="hidden"></p>
+        </div>
+        <div id="view-secret-section" class="hidden">
+            <h2>Your Secret:</h2>
+            <div class="secret-display-container">
+                <p id="displayed-secret"></p>
+                <button id="copy-secret-btn" class="hidden">Copy Secret</button>
+            </div>
+            <p id="view-message"></p>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
