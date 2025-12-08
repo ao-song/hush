@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayedSecret = document.getElementById('displayed-secret');
     const viewMessage = document.getElementById('view-message');
 
-    const backendBaseUrl = '##APP_SUB_PATH_PREFIX##';
+    const baseHref = document.getElementsByTagName('base')[0].getAttribute('href');
 
     // Function to show messages
     function showMessage(msg, isError = true) {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch(`${backendBaseUrl}/api/create_secret/`, { // e.g. /hush/api/create_secret/
+                const response = await fetch(`api/create_secret/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,13 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle viewing a secret from a shared link
     const path = window.location.pathname;
-    const secretPathPrefix = `${backendBaseUrl}/secret/`;
+    const secretPathPrefix = `${baseHref}secret/`;
     if (path.startsWith(secretPathPrefix)) {
         const uniqueId = path.substring(secretPathPrefix.length);
         if (uniqueId) {
             createSecretSection.classList.add('hidden');
             viewSecretSection.classList.remove('hidden');
-            fetch(`${backendBaseUrl}/api/secret/${uniqueId}`) // e.g. /hush/api/secret/xyz
+            fetch(`api/secret/${uniqueId}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(err => { throw new Error(err.detail || 'Failed to retrieve secret.'); });

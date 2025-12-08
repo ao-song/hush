@@ -12,12 +12,13 @@ if [ -n "$APP_SUB_PATH" ] && [ "$APP_SUB_PATH" != "/" ]; then
     APP_SUB_PATH_PREFIX="/$CLEAN_SUB_PATH"
 else
     APP_SUB_PATH_PREFIX=""
+    CLEAN_SUB_PATH=""
 fi
 
 # Replace placeholders in Nginx config and frontend files
 sed -i "s|##APP_SUB_PATH_PREFIX##|$APP_SUB_PATH_PREFIX|g" /etc/nginx/conf.d/default.conf
-sed -i "s|##APP_SUB_PATH_PREFIX##|$APP_SUB_PATH_PREFIX|g" /app/frontend/index.html
-sed -i "s|##APP_SUB_PATH_PREFIX##|$APP_SUB_PATH_PREFIX|g" /app/frontend/script.js
+sed -i "s|##APP_SUB_PATH_PREFIX##|$CLEAN_SUB_PATH|g" /app/frontend/index.html
+sed -i "s|##APP_SUB_PATH_PREFIX##|$CLEAN_SUB_PATH|g" /app/frontend/script.js
 chown appuser:appuser /app/frontend/script.js /app/frontend/index.html
 
 # Start nginx in the background
