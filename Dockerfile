@@ -18,7 +18,7 @@ COPY --chown=appuser:appuser backend/requirements.txt ./
 COPY --chown=appuser:appuser backend/ ./
 
 # Stage 2: Build the frontend (using Nginx for static files)
-FROM nginx:alpine AS frontend-builder
+FROM alpine:3.18 AS frontend-builder
 
 WORKDIR /app/frontend
 
@@ -29,7 +29,8 @@ COPY frontend/ .
 FROM python:3.13-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    APP_SUB_PATH=hush
 
 WORKDIR /app/backend
 
@@ -51,7 +52,7 @@ COPY --from=backend-builder --chown=appuser:appuser /app/backend /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy frontend from frontend-builder stage
-COPY --from=frontend-builder --chown=appuser:appuser /app/frontend /app/frontend
+COPY --from=frontend-builder /app/frontend /app/frontend
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf

@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8100:8100"
+    environment:
+      - APP_SUB_PATH=hush
     restart: unless-stopped
     healthcheck:
       # The Nginx proxy is the entry point, so we check if it's serving content.
