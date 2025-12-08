@@ -52,7 +52,7 @@ COPY --from=backend-builder --chown=appuser:appuser /app/backend /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy frontend from frontend-builder stage
-COPY --from=frontend-builder /app/frontend /app/frontend
+COPY --from=frontend-builder --chown=appuser:appuser /app/frontend /app/frontend
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
